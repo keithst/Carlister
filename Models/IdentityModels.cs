@@ -39,9 +39,21 @@ namespace Carlister.Models
 
 
 
-        public async Task<List<string>> GetYears()
+        public async Task<List<string>> GetYearsDist()
         {
-            return await this.Database.SqlQuery<string>("GetYears").ToListAsync();
+            return await this.Database.SqlQuery<string>("GetYearsDist").ToListAsync();
+        }
+
+        public async Task<List<string>> GetMakesDist()
+        {
+            return await this.Database.SqlQuery<string>("GetMakesDist").ToListAsync();
+        }
+
+        public async Task<List<string>> GetMakesByYear(string year)
+        {
+            var yearParm = new SqlParameter("@year", year);
+
+            return await this.Database.SqlQuery<string>("GetMakesByYear @year", yearParm).ToListAsync();
         }
 
         public async Task<List<string>> GetMakesByYearDist(string year)
@@ -64,6 +76,25 @@ namespace Carlister.Models
             var makeParm = new SqlParameter("@make", make);
 
             return await this.Database.SqlQuery<Car>("GetCarsByYearMake @year, @make", yearParm, makeParm).ToListAsync();
+        }
+        
+        public async Task<List<Car>> GetCarsByYearMakeModel(string year, string make, string model)
+        {
+            var yearParm = new SqlParameter("@year", year);
+            var makeParm = new SqlParameter("@make", make);
+            var modelParm = new SqlParameter("@model", model);
+
+            return await this.Database.SqlQuery<Car>("GetCarsByYearMakeModel @year, @make, @model", yearParm, makeParm, modelParm).ToListAsync();
+        }
+
+        public async Task<List<Car>> GetCarsByYearMakeModelTrim(string year, string make, string model, string trim)
+        {
+            var yearParm = new SqlParameter("@year", year);
+            var makeParm = new SqlParameter("@make", make);
+            var modelParm = new SqlParameter("@model", model);
+            var trimParm = new SqlParameter("@trim", trim);
+
+            return await this.Database.SqlQuery<Car>("GetCarsByYearMakeModelTrim @year, @make, @model, @trim", yearParm, makeParm, modelParm, trimParm).ToListAsync();
         }
     }
 }

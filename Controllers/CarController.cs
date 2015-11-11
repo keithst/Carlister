@@ -20,10 +20,22 @@ namespace Carlister.Controllers
             return "Hello World";
         }
 
-        [Route("GetYears")]
-        public async Task<List<string>> GetYears()
+        [Route("GetYearsDist")]
+        public async Task<List<string>> GetYearsDist()
         {
-            return await db.GetYears();
+            return await db.GetYearsDist();
+        }
+
+        [Route("GetMakesDist")]
+        public async Task<List<string>> GetMakesDist()
+        {
+            return await db.GetMakesDist();
+        }
+
+        [Route("GetMakesByYear")]
+        public async Task<List<string>> GetMakesByYear(string year)
+        {
+            return await db.GetMakesByYear(year);
         }
 
         [Route("GetMakesByYearDist")]
@@ -42,6 +54,18 @@ namespace Carlister.Controllers
         public async Task<List<Car>> GetCarsByYearMake(string year, string make)
         {
             return await db.GetCarsByYearMake(year, make);
+        }
+
+        [Route("GetCarsByYearMakeModel")]
+        public async Task<List<Car>> GetCarsByYearMakeModel(string year, string make, string model)
+        {
+            return await db.GetCarsByYearMakeModel(year, make, model);
+        }
+
+        [Route("GetCarsByYearMakeModelTrim")]
+        public async Task<List<Car>> GetCarsByYearMakeModelTrim(string year, string make, string model, string trim)
+        {
+            return await db.GetCarsByYearMakeModelTrim(year, make, model, trim);
         }
     }
 }
