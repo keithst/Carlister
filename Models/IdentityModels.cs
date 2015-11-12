@@ -96,5 +96,6 @@ namespace Carlister.Models
 
             return await this.Database.SqlQuery<Car>("GetCarsByYearMakeModelTrim @year, @make, @model, @trim", yearParm, makeParm, modelParm, trimParm).ToListAsync();
         }
+
     }
 }

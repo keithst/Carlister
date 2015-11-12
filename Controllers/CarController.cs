@@ -1,4 +1,5 @@
-﻿using Carlister.Models;
+﻿using Bing;
+using Carlister.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -66,6 +67,46 @@ namespace Carlister.Controllers
         public async Task<List<Car>> GetCarsByYearMakeModelTrim(string year, string make, string model, string trim)
         {
             return await db.GetCarsByYearMakeModelTrim(year, make, model, trim);
+        }
+
+        [Route("GetCar")]
+        public async Task<IHttpActionResult> GetCar(int id)
+        {
+            var car = db.Cars.Find(id);
+
+            if (car == null)
+            {
+                return await Task.FromResult(NotFound());
+            }
+
+            var client = new BingSearchContainer(
+        	new Uri("https://api.datamarket.azure.com/Bing/search/")
+            	);
+            client.Credentials = new NetworkCredential("accountKey", "baDOTqrNCHJ38GxTzgc8o7rpbstAS9VG5gYE8kfkHro");
+            var marketData = client.Composite(
+	        "image",
+	        car.model_year + " " + car.make + " " + car.model_name + " " + car.model_trim,
+	        null,
+	        null,
+	        null,
+	        null,
+	        null,
+	        null,
+	        null,
+	        null,
+	        null,
+	        null,
+	        null,
+	        null,
+	        null
+	        ).Execute();
+
+            var result = marketData.FirstOrDefault();
+            var image = result != null ? result.Image : null;
+            var firstImage = image != null ? image.FirstOrDefault() : null;
+            var mediaUrl = firstImage != null ? firstImage.MediaUrl : null;
+
+            return Ok(new { car, mediaUrl });
         }
     }
 }
