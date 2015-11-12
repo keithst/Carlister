@@ -71,7 +71,7 @@ namespace Carlister.Controllers
         }
 
         [Route("GetVariableCars")]
-        public async Task<List<Car>> GetVariableCars(string year=null, string make=null, string model=null, string trim=null)
+        public async Task<List<Car>> GetVariableCars(string year, string make=null, string model=null, string trim=null)
         {
             return await db.GetVariableCars(year, make, model, trim);
         }
