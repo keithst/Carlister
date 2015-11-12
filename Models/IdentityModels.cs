@@ -97,5 +97,59 @@ namespace Carlister.Models
             return await this.Database.SqlQuery<Car>("GetCarsByYearMakeModelTrim @year, @make, @model, @trim", yearParm, makeParm, modelParm, trimParm).ToListAsync();
         }
 
+        public async Task<List<Car>> GetVariableCars(string year, string make, string model, string trim)
+        {
+            var yearParm = new SqlParameter("@year", year);
+            var makeParm = new SqlParameter("@make", make);
+            var modelParm = new SqlParameter("@model", model);
+            var trimParm = new SqlParameter("@trim", trim);
+
+            var stored = "GetVariableCars "; 
+            bool notfirst = false;
+            List<SqlParameter> storedparm = new List<SqlParameter>();
+            if(!string.IsNullOrWhiteSpace(year))
+            {
+                if(notfirst)
+                {
+                    stored += ", ";
+                }
+                stored += "@year";
+                storedparm.Add(yearParm);
+                notfirst = true;
+            }
+            if (!string.IsNullOrWhiteSpace(make))
+            {
+                if (notfirst)
+                {
+                    stored += ", ";
+                }
+                stored += "@make";
+                storedparm.Add(makeParm);
+                notfirst = true;
+            }
+            if (!string.IsNullOrWhiteSpace(model))
+            {
+                if (notfirst)
+                {
+                    stored += ", ";
+                }
+                stored += "@model";
+                storedparm.Add(modelParm);
+                notfirst = true;
+            }
+            if (!string.IsNullOrWhiteSpace(trim))
+            {
+                if (notfirst)
+                {
+                    stored += ", ";
+                }
+                stored += "@trim";
+                storedparm.Add(trimParm);
+                notfirst = true;
+            }
+
+            return await this.Database.SqlQuery<Car>(stored, storedparm.ToArray()).ToListAsync();
+        }
+
     }
 }

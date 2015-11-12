@@ -70,6 +70,12 @@ namespace Carlister.Controllers
             return await db.GetCarsByYearMakeModelTrim(year, make, model, trim);
         }
 
+        [Route("GetVariableCars")]
+        public async Task<List<Car>> GetVariableCars(string year=null, string make=null, string model=null, string trim=null)
+        {
+            return await db.GetVariableCars(year, make, model, trim);
+        }
+
         [Route("GetCar")]
         public async Task<IHttpActionResult> GetCar(int id)
         {
