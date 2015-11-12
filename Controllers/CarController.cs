@@ -1,5 +1,6 @@
 ﻿using Bing;
 using Carlister.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -79,6 +80,8 @@ namespace Carlister.Controllers
                 return await Task.FromResult(NotFound());
             }
 
+            HttpResponseMessage response;
+
             var client = new BingSearchContainer(
         	new Uri("https://api.datamarket.azure.com/Bing/search/")
             	);
@@ -106,7 +109,24 @@ namespace Carlister.Controllers
             var firstImage = image != null ? image.FirstOrDefault() : null;
             var mediaUrl = firstImage != null ? firstImage.MediaUrl : null;
 
-            return Ok(new { car, mediaUrl });
+            dynamic recalls;
+
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri("http://www.nhtsa.gov/");
+
+                try
+                {
+                    response = await httpClient.GetAsync("webapi/api/Recalls/vehicle/modelyear/"+car.model_year+"/make/"+car.make+"/model/"+car.model_name+"?format=json");
+                    recalls = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
+                }
+                catch (Exception e)
+                {
+                    return InternalServerError(e);
+                }
+            }
+
+            return Ok(new { car, mediaUrl, recalls });
         }
     }
 }
