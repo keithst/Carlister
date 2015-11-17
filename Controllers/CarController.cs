@@ -22,6 +22,9 @@ namespace Carlister.Controllers
             return "Hello World";
         }
 
+        ///<summary>
+        ///Get Distinct list of years
+        ///</summary>
         [Route("GetYearsDist")]
         public async Task<List<string>> GetYearsDist()
         {
