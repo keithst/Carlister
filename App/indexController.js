@@ -119,6 +119,7 @@
         testCarSvc.getYears1(self.selected).then(function (data) {
             self.options.years = data;
         });
+        self.getCars();
     }
 
     self.getMakes = function () {

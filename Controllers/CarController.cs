@@ -116,7 +116,19 @@ namespace Carlister.Controllers
         [Route("GetVariableCars")]
         public async Task<List<Car>> GetVariableCars(apiparm input)
         {
-            return await db.GetVariableCars(input.year, input.make, input.model, input.trim);
+            List<Car> data = new List<Car>();
+            if (!string.IsNullOrWhiteSpace(input.year))
+            {
+                data = await db.GetVariableCars(input.year, input.make, input.model, input.trim);
+            }
+            else
+            {
+                if(!string.IsNullOrWhiteSpace(input.make) && string.IsNullOrWhiteSpace(input.model) && string.IsNullOrWhiteSpace(input.trim))
+                {
+                    data = await db.GetCarsByMake(input.make);
+                }
+            }
+            return data;
         }
 
         [Route("GetCar")]
