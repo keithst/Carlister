@@ -71,6 +71,33 @@
             ]);
             return d.promise;
         }
+
+        f.getMakes1 = function () {
+            var d = $q.defer();
+            d.resolve(['kia', 'ford', 'acura', 'chevy'])
+            return d.promise;
+        }
+
+        f.getYears1 = function (make) {
+            var d = $q.defer();
+            switch (make) {
+                case 'kia':
+                    d.resolve(['1999', '2000'])
+                    break;
+                case 'ford':
+                    d.resolve(['1999', '2000'])
+                    break;
+                case 'acura':
+                    d.resolve(['2001', '2002'])
+                    break;
+                case 'chevy':
+                    d.resolve(['2001', '2002'])
+                    break;
+            }
+            return d.promise;
+        }
+
+
         return f;
 
     }

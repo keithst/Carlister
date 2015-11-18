@@ -70,8 +70,47 @@
 
     self.cars = [];
 
+    self.DataIni = function (year, make) {
+        self.selected.year = "";
+        self.options.years = "";
+        self.selected.make = "";
+        self.options.makes = "";
+        self.selected.model = "";
+        self.options.models = "";
+        self.selected.trim = "";
+        self.options.trims = "";
+        self.cars = [];
+        if(year)
+        {
+            self.getYears();
+        }
+        if(make)
+        {
+            self.getMakes1();
+        }
+    }
+
     self.getYears = function () {
         testCarSvc.getYears().then(function (data) {
+            self.options.years = data;
+        })
+    }
+
+    self.getMakes1 = function () {
+        testCarSvc.getMakes1().then(function (data) {
+            self.options.makes = data;
+        })
+    }
+
+    self.getYears1 = function () {
+        self.selected.year = "";
+        self.options.years = "";
+        self.selected.model = "";
+        self.options.models = "";
+        self.selected.trim = "";
+        self.options.trims = "";
+        self.cars = [];
+        testCarSvc.getYears1(self.selected.make).then(function (data) {
             self.options.years = data;
         })
     }
