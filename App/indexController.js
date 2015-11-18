@@ -1,4 +1,4 @@
-﻿angular.module("car-finder").controller("indexController", ['$interval', 'testCarSvc', function ($interval, testCarSvc) {
+﻿angular.module("car-finder").controller("indexController", ['testCarSvc', function (testCarSvc) {
     var self = this;
 
     self.yearchecked = "";
