@@ -12,7 +12,7 @@
             <button ng-click="ctrl.pauseit()">Pause</button>
             <button ng-click="ctrl.pauseitwatch()">Pause watch</button>
         </div>
-        <select ng-options="year for year in ctrl.options.years | orderBy: 'year'" ng-model="ctrl.selected.year" ng-change="ctrl.getMakes()"></select>
+        <select ng-init="ctrl.getYears()" ng-options="year for year in ctrl.options.years | orderBy: 'year'" ng-model="ctrl.selected.year" ng-change="ctrl.getMakes()"></select>
         {{ctrl.selected.year}}
         <select ng-options="make for make in ctrl.options.makes | orderBy: 'make'" ng-model="ctrl.selected.make" ng-change="ctrl.getModels()"></select>
         {{ctrl.selected.make}}

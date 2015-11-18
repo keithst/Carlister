@@ -125,6 +125,4 @@
     $interval(updatestopwatch, 10);
     $interval(updateName, 1000);
     $interval(updateClock, 1000);
-
-    self.getYears();
 }]);
