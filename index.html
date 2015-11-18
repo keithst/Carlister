@@ -1,19 +1,14 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <link href="Content/trNgGrid.min.css" rel="stylesheet" />
     <title></title>
 </head>
 <body>
     <div ng-app="car-finder" ng-controller="indexController as ctrl" ng-cloak>
-        <div>
-            {{ctrl.clock | date:'medium'}}
-            {{ctrl.stopwatch | date:'mm:ss:sss'}}
-            {{ctrl.name}}
-            <button ng-click="ctrl.pauseit()">Pause</button>
-            <button ng-click="ctrl.pauseitwatch()">Pause watch</button>
-        </div>
         <input type="radio" name="start" ng-model="ctrl.yearchecked" value="true" ng-change="ctrl.DataIni(ctrl.yearchecked, false)" />Year
-        <input type="radio" name="start" ng-model="ctrl.makechecked" value="true" ng-change="ctrl.DataIni(false, ctrl.makechecked)" />Model<br />
+        <input type="radio" name="start" ng-model="ctrl.makechecked" value="true" ng-change="ctrl.DataIni(false, ctrl.makechecked)" />Make<br />
+        {{ctrl.printstring}}<br />
         <select ng-show="ctrl.yearchecked" ng-options="year for year in ctrl.options.years | orderBy: 'year'" ng-model="ctrl.selected.year" ng-change="ctrl.getMakes()"></select>
         <select ng-show="ctrl.yearchecked && ctrl.selected.year" ng-options="make for make in ctrl.options.makes | orderBy: 'make'" ng-model="ctrl.selected.make" ng-change="ctrl.getModels()"></select>
         <select ng-show="ctrl.yearchecked && ctrl.selected.make" ng-options="model for model in ctrl.options.models | orderBy: 'model'" ng-model="ctrl.selected.model" ng-change="ctrl.getTrims()"></select>
@@ -25,18 +20,21 @@
         <select ng-show="ctrl.makechecked && ctrl.selected.year" ng-options="model for model in ctrl.options.models | orderBy: 'model'" ng-model="ctrl.selected.model" ng-change="ctrl.getTrims()"></select>
         <select ng-show="ctrl.makechecked && ctrl.selected.model" ng-options="trim for trim in ctrl.options.trims | orderBy: 'trim'" ng-model="ctrl.selected.trim" ng-change="ctrl.getCars()"></select><br />
 
-        {{ctrl.selected.year}}
-        {{ctrl.selected.make}}
-        {{ctrl.selected.model}}
-        {{ctrl.selected.trim}}
-        <div ng-repeat="car in ctrl.cars">
-            {{car}}
-        </div>
+        <table tr-ng-grid="" items="ctrl.cars" fields="['model_year', 'make_display', 'model_name', 'model_trim']">
+            <thead>
+                <tr>
+                    <th field-name="model_year" display-name="Year"></th>
+                    <th field-name="make_display" display-name="Make"></th>
+                    <th field-name="model_name" display-name="Model"></th>
+                    <th field-name="model_trim" display-name="Trim"></th>
+                </tr>
+            </thead>
+        </table>
     </div>
 
     <script src="Scripts/jquery-1.10.2.min.js"></script>
     <script src="Scripts/angular.min.js"></script>
-
+    <script src="Scripts/trNgGrid.min.js"></script>
     <script src="App/App.js"></script>
     <script src="App/httprequest.js"></script>
     <script src="App/indexController.js"></script>

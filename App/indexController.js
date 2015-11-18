@@ -4,60 +4,6 @@
     self.yearchecked = "";
     self.makechecked = "";
 
-    self.stopwatch = 0;
-    self.clock = Date.now();
-
-    var updateClock = function () {
-        if (!self.pause)
-        {
-            self.clock = Date.now();
-        }
-    }
-
-    self.names = ["Bob", "Dan", "Ray"];
-    self.index = 0;
-    self.name = self.names[self.index];
-
-    var updateName = function () {
-        if (!self.pause) {
-            self.index++;
-            if (self.index >= self.names.length) {
-                self.index = 0;
-            }
-            self.name = self.names[self.index];
-        }
-    }
-
-    self.pause = false;
-    self.pausewatch = true;
-
-    self.pauseit = function () {
-        if(self.pause)
-        {
-            self.pause = false;
-        }
-        else
-        {
-            self.pause = true;
-        }
-    }
-
-    self.pauseitwatch = function () {
-        if (self.pausewatch) {
-            self.pausewatch = false;
-        }
-        else {
-            self.pausewatch = true;
-        }
-    }
-
-    var updatestopwatch = function () {
-        if(!self.pausewatch)
-        {
-            self.stopwatch += 10;
-        }
-    }
-
     self.selected = {
         year: "",
         make: "",
@@ -73,6 +19,7 @@
     }
 
     self.cars = [];
+    self.printstring = "";
 
     self.DataIni = function (year, make) {
         self.selected.year = "";
@@ -86,13 +33,15 @@
         self.cars = [];
         if(year)
         {
-            self.getYears();
+            self.printstring = "Please select a year"
             self.makechecked = "";
+            self.getYears();
         }
         if(make)
         {
-            self.getMakes1();
+            self.printstring = "Please select a make"
             self.yearchecked = "";
+            self.getMakes1();
         }
     }
 
@@ -116,6 +65,7 @@
         self.selected.trim = "";
         self.options.trims = "";
         self.cars = [];
+        self.printstring = "Please select a year"
         testCarSvc.getYears1(self.selected).then(function (data) {
             self.options.years = data;
         });
@@ -130,7 +80,7 @@
         self.selected.trim = "";
         self.options.trims = "";
         self.cars = [];
-
+        self.printstring = "Please select a make"
         testCarSvc.getMakes(self.selected).then(function (data) {
             self.options.makes = data;
         })
@@ -143,7 +93,7 @@
         self.selected.trim = "";
         self.options.trims = "";
         self.cars = [];
-
+        self.printstring = "Please select a model"
         testCarSvc.getModels(self.selected).then(function (data) {
             self.options.models = data;
         })
@@ -154,12 +104,13 @@
         self.selected.trim = "";
         self.options.trims = "";
         self.cars = [];
-
+        self.printstring = "Please select a trim"
         testCarSvc.getTrims(self.selected).then(function (data) {
             self.options.trims = data;
         })
         self.getCars();
     }
+
     self.getCars = function () {
         self.cars = [];
 
@@ -168,7 +119,4 @@
             self.cars = data;
         })
     }
-    $interval(updatestopwatch, 10);
-    $interval(updateName, 1000);
-    $interval(updateClock, 1000);
 }]);

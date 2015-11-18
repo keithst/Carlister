@@ -24,6 +24,7 @@ namespace Carlister.Controllers
             public string make { get; set; }
             public string model { get; set; }
             public string trim { get; set; }
+            public bool? trimbit { get; set; }
         }
 
         public string Get()
@@ -119,7 +120,7 @@ namespace Carlister.Controllers
             List<Car> data = new List<Car>();
             if (!string.IsNullOrWhiteSpace(input.year))
             {
-                data = await db.GetVariableCars(input.year, input.make, input.model, input.trim);
+                data = await db.GetVariableCars(input.year, input.make, input.model, input.trim, input.trimbit);
             }
             else
             {

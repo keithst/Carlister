@@ -1,1 +1,1 @@
-﻿angular.module("car-finder", []);
+﻿angular.module("car-finder", ["trNgGrid"]);

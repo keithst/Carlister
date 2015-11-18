@@ -128,7 +128,7 @@ namespace Carlister.Models
             return await this.Database.SqlQuery<Car>("GetCarsByYearMakeModelTrim @year, @make, @model, @trim", yearParm, makeParm, modelParm, trimParm).ToListAsync();
         }
 
-        public async Task<List<Car>> GetVariableCars(string year, string make, string model, string trim)
+        public async Task<List<Car>> GetVariableCars(string year, string make, string model, string trim, bool? trimbit)
         {
             var yearParm = new SqlParameter("@year", year);
             var makeParm = new SqlParameter("@make", make);
