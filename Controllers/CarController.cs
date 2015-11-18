@@ -17,6 +17,15 @@ namespace Carlister.Controllers
     public class CarController : ApiController
     {
         ApplicationDbContext db = new ApplicationDbContext();
+
+        public class apiparm
+        {
+            public string year { get; set; }
+            public string make { get; set; }
+            public string model { get; set; }
+            public string trim { get; set; }
+        }
+
         public string Get()
         {
             return "Hello World";
@@ -25,58 +34,89 @@ namespace Carlister.Controllers
         ///<summary>
         ///Get Distinct list of years
         ///</summary>
+        [HttpPost]
         [Route("GetYearsDist")]
         public async Task<List<string>> GetYearsDist()
         {
             return await db.GetYearsDist();
         }
 
+        [HttpPost]
         [Route("GetMakesDist")]
         public async Task<List<string>> GetMakesDist()
         {
             return await db.GetMakesDist();
         }
 
+        [HttpPost]
+        [Route("GetYearsByMakeDist")]
+        public async Task<List<string>> GetYearsByMakeDist(apiparm input)
+        {
+            return await db.GetYearsByMakeDist(input.make);
+        }
+
+        [HttpPost]
         [Route("GetMakesByYear")]
-        public async Task<List<string>> GetMakesByYear(string year)
+        public async Task<List<string>> GetMakesByYear(apiparm input)
         {
-            return await db.GetMakesByYear(year);
+            return await db.GetMakesByYear(input.year);
         }
 
+        [HttpPost]
         [Route("GetMakesByYearDist")]
-        public async Task<List<string>> GetMakesByYearDist(string year)
+        public async Task<List<string>> GetMakesByYearDist(apiparm input)
         {
-            return await db.GetMakesByYearDist(year);
+            return await db.GetMakesByYearDist(input.year);
         }
 
+        [HttpPost]
+        [Route("GetModelsByYearMakeDist")]
+        public async Task<List<string>> GetModelsByYearMakeDist(apiparm input)
+        {
+            return await db.GetModelsByYearMakeDist(input.year, input.make);
+        }
+
+        [HttpPost]
+        [Route("GetTrimsByYearMakeModelDist")]
+        public async Task<List<string>> GetTrimsByYearMakeModelDist(apiparm input)
+        {
+            return await db.GetTrimsByYearMakeModelDist(input.year, input.make, input.model);
+        }
+
+
+        [HttpPost]
         [Route("GetCarsByYear")]
-        public async Task<List<Car>> GetCarsByYear(string year)
+        public async Task<List<Car>> GetCarsByYear(apiparm input)
         {
-            return await db.GetCarsByYear(year);
+            return await db.GetCarsByYear(input.year);
         }
 
+        [HttpPost]
         [Route("GetCarsByYearMake")]
-        public async Task<List<Car>> GetCarsByYearMake(string year, string make)
+        public async Task<List<Car>> GetCarsByYearMake(apiparm input)
         {
-            return await db.GetCarsByYearMake(year, make);
+            return await db.GetCarsByYearMake(input.year, input.make);
         }
 
+        [HttpPost]
         [Route("GetCarsByYearMakeModel")]
-        public async Task<List<Car>> GetCarsByYearMakeModel(string year, string make, string model)
+        public async Task<List<Car>> GetCarsByYearMakeModel(apiparm input)
         {
-            return await db.GetCarsByYearMakeModel(year, make, model);
+            return await db.GetCarsByYearMakeModel(input.year, input.make, input.model);
         }
 
+        [HttpPost]
         [Route("GetCarsByYearMakeModelTrim")]
-        public async Task<List<Car>> GetCarsByYearMakeModelTrim(string year, string make, string model, string trim)
+        public async Task<List<Car>> GetCarsByYearMakeModelTrim(apiparm input)
         {
-            return await db.GetCarsByYearMakeModelTrim(year, make, model, trim);
+            return await db.GetCarsByYearMakeModelTrim(input.year, input.make, input.model, input.trim);
         }
 
+        [HttpPost]
         [Route("GetVariableCars")]
-        public async Task<List<Car>> GetVariableCars(string year, string make=null, string model=null, string trim=null)
+        public async Task<List<Car>> GetVariableCars(apiparm input)
         {
-            return await db.GetVariableCars(year, make, model, trim);
+            return await db.GetVariableCars(input.year, input.make, input.model, input.trim);
         }
 
         [Route("GetCar")]

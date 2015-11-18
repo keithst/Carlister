@@ -1,5 +1,9 @@
 ﻿angular.module("car-finder").controller("indexController", ['$interval', 'testCarSvc', function ($interval, testCarSvc) {
     var self = this;
+
+    self.yearchecked = "";
+    self.makechecked = "";
+
     self.stopwatch = 0;
     self.clock = Date.now();
 
@@ -83,23 +87,25 @@
         if(year)
         {
             self.getYears();
+            self.makechecked = "";
         }
         if(make)
         {
             self.getMakes1();
+            self.yearchecked = "";
         }
     }
 
     self.getYears = function () {
         testCarSvc.getYears().then(function (data) {
             self.options.years = data;
-        })
+        });
     }
 
     self.getMakes1 = function () {
         testCarSvc.getMakes1().then(function (data) {
             self.options.makes = data;
-        })
+        });
     }
 
     self.getYears1 = function () {
@@ -110,9 +116,9 @@
         self.selected.trim = "";
         self.options.trims = "";
         self.cars = [];
-        testCarSvc.getYears1(self.selected.make).then(function (data) {
+        testCarSvc.getYears1(self.selected).then(function (data) {
             self.options.years = data;
-        })
+        });
     }
 
     self.getMakes = function () {
@@ -124,7 +130,7 @@
         self.options.trims = "";
         self.cars = [];
 
-        testCarSvc.getMakes(self.selected.year).then(function (data) {
+        testCarSvc.getMakes(self.selected).then(function (data) {
             self.options.makes = data;
         })
         self.getCars();
@@ -137,7 +143,7 @@
         self.options.trims = "";
         self.cars = [];
 
-        testCarSvc.getModels(self.selected.year, self.selected.make).then(function (data) {
+        testCarSvc.getModels(self.selected).then(function (data) {
             self.options.models = data;
         })
         self.getCars();
@@ -148,7 +154,7 @@
         self.options.trims = "";
         self.cars = [];
 
-        testCarSvc.getTrims(self.selected.year, self.selected.make, self.selected.model).then(function (data) {
+        testCarSvc.getTrims(self.selected).then(function (data) {
             self.options.trims = data;
         })
         self.getCars();
@@ -156,7 +162,7 @@
     self.getCars = function () {
         self.cars = [];
 
-        testCarSvc.getCars(self.selected.year, self.selected.make, self.selected.model, self.selected.trim).then(function (data)
+        testCarSvc.getCars(self.selected).then(function (data)
         {
             self.cars = data;
         })

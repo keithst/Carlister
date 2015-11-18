@@ -56,11 +56,35 @@ namespace Carlister.Models
             return await this.Database.SqlQuery<string>("GetMakesByYear @year", yearParm).ToListAsync();
         }
 
+        public async Task<List<string>> GetYearsByMakeDist(string make)
+        {
+            var makeParm = new SqlParameter("@make", make);
+
+            return await this.Database.SqlQuery<string>("GetYearsByMakeDist @make", makeParm).ToListAsync();
+        }
+
         public async Task<List<string>> GetMakesByYearDist(string year)
         {
             var yearParm = new SqlParameter("@year", year);
 
             return await this.Database.SqlQuery<string>("GetMakesByYearDist @year", yearParm).ToListAsync();
+        }
+
+        public async Task<List<string>> GetModelsByYearMakeDist(string year, string make)
+        {
+            var yearParm = new SqlParameter("@year", year);
+            var makeParm = new SqlParameter("@make", make);
+
+            return await this.Database.SqlQuery<string>("GetModelsByYearMakeDist @year, @make", yearParm, makeParm).ToListAsync();
+        }
+
+        public async Task<List<string>> GetTrimsByYearMakeModelDist(string year, string make, string model)
+        {
+            var yearParm = new SqlParameter("@year", year);
+            var makeParm = new SqlParameter("@make", make);
+            var modelParm = new SqlParameter("@model", model);
+
+            return await this.Database.SqlQuery<string>("GetTrimsByYearMakeModelDist @year, @make, @model", yearParm, makeParm, modelParm).ToListAsync();
         }
 
         public async Task<List<Car>> GetCarsByYear(string year)

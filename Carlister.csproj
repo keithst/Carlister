@@ -249,6 +249,7 @@
   <ItemGroup>
     <Content Include="App\App.js" />
     <Content Include="App\factory.js" />
+    <Content Include="App\httprequest.js" />
     <Content Include="App\indexController.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
