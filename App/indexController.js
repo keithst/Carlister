@@ -1,4 +1,4 @@
-﻿angular.module("car-finder").controller("indexController", ['$q', 'testCarSvc', function ($q, testCarSvc) {
+﻿angular.module("car-finder").controller("indexController", ['$q', '$uibModal', 'testCarSvc', function ($q, $uibModal, testCarSvc) {
     var self = this;
 
     self.perPages = 50;
@@ -8,6 +8,10 @@
         if (self.perPages > 200)
         {
             self.perPages = 200;
+        }
+        if (self.perPages < 1)
+        {
+            self.perPages = 1;
         }
         self.selected.perPage = self.perPages;
     }
@@ -81,8 +85,6 @@
         testCarSvc.getYears1(self.selected).then(function (data) {
             self.options.years = data;
         });
-/*        self.getCars();
-        self.getCount(); */
         self.getCars1();
     }
 
@@ -97,8 +99,6 @@
         testCarSvc.getMakes(self.selected).then(function (data) {
             self.options.makes = data;
         })
-/*        self.getCars();
-        self.getCount(); */
         self.getCars1();
     }
 
@@ -111,8 +111,6 @@
         testCarSvc.getModels(self.selected).then(function (data) {
             self.options.models = data;
         })
-/*        self.getCars();
-        self.getCount(); */
         self.getCars1();
     }
 
@@ -123,7 +121,6 @@
         testCarSvc.getTrims(self.selected).then(function (data) {
             self.options.trims = data;
         })
-        /*        self.getCount(); */
         self.getCars1();
     }
 
@@ -163,9 +160,37 @@
     self.getAllinfo = function () {
         if ((self.yearchecked && self.selected.year != "") || (self.makechecked && self.selected.make != ""))
         {
-/*            self.getCars();
-            self.getCount(); */
             self.getCars1();
         }
     }
+
+    self.open = function (id) {
+        console.log("Id in open " + id);
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: 'carModal.html',
+            controller: 'carModalCtrl as cm',
+            size: 'lg',
+            resolve: {
+                car: function () {
+                    return testCarSvc.getDetails(id);
+                }
+            }
+        })
+    }
 }]);
+
+angular.module("car-finder").controller('carModalCtrl', function ($modalInstance, car) {
+
+    var scope = this;
+
+    scope.car = car;
+
+    scope.ok = function () {
+        $modalInstance.close();
+    };
+
+    scope.cancel = function () {
+        $modalInstance.dismiss();
+    };
+});

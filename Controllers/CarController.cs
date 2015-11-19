@@ -28,12 +28,10 @@ namespace Carlister.Controllers
             public int page { get; set; }
             public int perPage { get; set; }
         }
-
-        public string Get()
+        public class IdParam
         {
-            return "Hello World";
+            public int id { get; set; }
         }
-
         ///<summary>
         ///Get Distinct list of years
         ///</summary>
@@ -140,11 +138,12 @@ namespace Carlister.Controllers
         {
             return await db.GetCount(input.year, input.make, input.model, input.trim);
         }
-
+       
         [Route("GetCar")]
-        public async Task<IHttpActionResult> GetCar(int id)
+        [HttpPost]
+        public async Task<IHttpActionResult> GetCar(IdParam id)
         {
-            var car = db.Cars.Find(id);
+            var car = db.Cars.Find(id.id);
 
             if (car == null)
             {

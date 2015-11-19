@@ -51,6 +51,13 @@
             });
         }
 
+        f.getDetails = function (id) {
+            var Id = { id: id };
+            return $http.post('/api/Car/GetCar', Id).then(function (response) {
+                return response.data;
+            });
+        }
+
         return f;
 
     }

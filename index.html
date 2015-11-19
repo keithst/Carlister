@@ -27,7 +27,7 @@
         <span ng-show="ctrl.makechecked && ctrl.selected.model">Trim</span>
         <select ng-show="ctrl.makechecked && ctrl.selected.model" ng-options="trim for trim in ctrl.options.trims | orderBy: 'trim'" ng-model="ctrl.selected.trim" ng-change="ctrl.getCars()"></select><br />
 
-        Cars Per Page<input type="number" ng-model="ctrl.perPages" ng-change="ctrl.changeperPage()" ng-init="ctrl.changeperPage()" />
+        <span>Cars Per Page</span><input type="number" ng-model="ctrl.perPages" ng-change="ctrl.changeperPage()" ng-init="ctrl.changeperPage()" />
         <table tr-ng-grid="" items="ctrl.cars" fields="['model_year', 'make_display', 'model_name', 'model_trim']"
                 total-items="ctrl.Carcount"
                on-data-required="ctrl.getAllinfo()"
@@ -41,11 +41,36 @@
                     <th field-name="model_trim" display-name="Trim"></th>
                 </tr>
             </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <button class="btn btn-default" ng-click="ctrl.open(gridItem.id)">Info</button>
+                    </td>
+                </tr>
+            </tbody>
         </table>
+        <script type="text/ng-template" id="carModal.html">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    {{cm.car.car.model_year}} {{cm.car.car.make}} - {{cm.car.car.model_name}} {{cm.car.car.model_trim}}
+                    <button class="pull-right btn btn-default" ng-click="cm.cancel()">X</button>
+                </h3>
+            </div>
+            <div class="modal-body">
+
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="cm.ok()">OK</button>
+                <button class="btn btn-warning" ng-click="cm.cancel()">Cancel</button>
+            </div>
+        </script>
     </div>
 
     <script src="Scripts/jquery-1.10.2.min.js"></script>
     <script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/angular-ui/ui-bootstrap.min.js"></script>
+    <script src="Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
     <script src="Scripts/trNgGrid.min.js"></script>
     <script src="App/App.js"></script>
     <script src="App/httprequest.js"></script>
