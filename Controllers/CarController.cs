@@ -128,7 +128,7 @@ namespace Carlister.Controllers
             {
                 if(!string.IsNullOrWhiteSpace(input.make) && string.IsNullOrWhiteSpace(input.model) && string.IsNullOrWhiteSpace(input.trim))
                 {
-                    data = await db.GetCarsByMake(input.make);
+                    data = await db.GetCarsByMake(input.make, input.paging, input.page, input.perPage);
                 }
             }
             return data;

@@ -26,7 +26,7 @@
         <select ng-show="ctrl.makechecked && ctrl.selected.year" ng-options="model for model in ctrl.options.models | orderBy: 'model'" ng-model="ctrl.selected.model" ng-change="ctrl.getTrims()"></select>
         <span ng-show="ctrl.makechecked && ctrl.selected.model">Trim</span>
         <select ng-show="ctrl.makechecked && ctrl.selected.model" ng-options="trim for trim in ctrl.options.trims | orderBy: 'trim'" ng-model="ctrl.selected.trim" ng-change="ctrl.getCars()"></select><br />
-
+        {{ctrl.Carcount}}
         Cars Per Page<input type="number" ng-model="ctrl.perPages" ng-change="ctrl.changeperPage()" ng-init="ctrl.changeperPage()" />
         <table tr-ng-grid="" items="ctrl.cars" fields="['model_year', 'make_display', 'model_name', 'model_trim']"
                 total-items="ctrl.Carcount"

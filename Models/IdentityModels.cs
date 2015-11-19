@@ -94,11 +94,14 @@ namespace Carlister.Models
             return await this.Database.SqlQuery<Car>("GetCarsByYear @year", yearParm).ToListAsync();
         }
 
-        public async Task<List<Car>> GetCarsByMake(string make)
+        public async Task<List<Car>> GetCarsByMake(string make, bool paging, int page, int perPage)
         {
             var makeParm = new SqlParameter("@make", make);
+            var pagingParm = new SqlParameter("@paging", paging);
+            var pageParm = new SqlParameter("@page", page);
+            var perPageParm = new SqlParameter("@perPage", perPage);
 
-            return await this.Database.SqlQuery<Car>("GetCarsByMake @make", makeParm).ToListAsync();
+            return await this.Database.SqlQuery<Car>("GetCarsByMake @make, @paging, @page, @perPage", makeParm, pagingParm, pageParm, perPageParm).ToListAsync();
         }
 
         public async Task<List<Car>> GetCarsByYearMake(string year, string make)
@@ -172,48 +175,18 @@ namespace Carlister.Models
             var trimParm = new SqlParameter("@trim", trim);
 
             var stored = "GetCount ";
-            bool notfirst = false;
             List<SqlParameter> storedparm = new List<SqlParameter>();
-            if (!string.IsNullOrWhiteSpace(year))
-            {
-                if (notfirst)
-                {
-                    stored += ", ";
-                }
                 stored += "@year";
                 storedparm.Add(yearParm);
-                notfirst = true;
-            }
-            if (!string.IsNullOrWhiteSpace(make))
-            {
-                if (notfirst)
-                {
-                    stored += ", ";
-                }
+                stored += ", ";
                 stored += "@make";
                 storedparm.Add(makeParm);
-                notfirst = true;
-            }
-            if (!string.IsNullOrWhiteSpace(model))
-            {
-                if (notfirst)
-                {
-                    stored += ", ";
-                }
+                stored += ", ";
                 stored += "@model";
                 storedparm.Add(modelParm);
-                notfirst = true;
-            }
-            if (!string.IsNullOrWhiteSpace(trim))
-            {
-                if (notfirst)
-                {
-                    stored += ", ";
-                }
+                stored += ", ";
                 stored += "@trim";
                 storedparm.Add(trimParm);
-                notfirst = true;
-            }
 
             return await this.Database.SqlQuery<int>(stored, storedparm.ToArray()).FirstOrDefaultAsync();
         }
