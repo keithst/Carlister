@@ -1,6 +1,16 @@
 ﻿angular.module("car-finder").controller("indexController", ['testCarSvc', function (testCarSvc) {
     var self = this;
 
+    self.perPages = 50;
+
+    self.changeperPage = function () {
+        if (self.perPages > 200)
+        {
+            self.perPages = 200;
+        }
+        self.selected.perPage = self.perPages;
+    }
+
     self.yearchecked = "";
     self.makechecked = "";
 
@@ -11,7 +21,7 @@
         trim: "",
         paging: true,
         page: 0,
-        perPage: 50
+        perPage: ""
     }
 
     self.options = {
