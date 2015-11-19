@@ -1,7 +1,8 @@
-﻿angular.module("car-finder").controller("indexController", ['testCarSvc', function (testCarSvc) {
+﻿angular.module("car-finder").controller("indexController", ['$q', 'testCarSvc', function ($q, testCarSvc) {
     var self = this;
 
     self.perPages = 50;
+    self.loading = false;
 
     self.changeperPage = function () {
         if (self.perPages > 200)
@@ -80,8 +81,9 @@
         testCarSvc.getYears1(self.selected).then(function (data) {
             self.options.years = data;
         });
-        self.getCars();
-        self.getCount();
+/*        self.getCars();
+        self.getCount(); */
+        self.getCars1();
     }
 
     self.getMakes = function () {
@@ -95,8 +97,9 @@
         testCarSvc.getMakes(self.selected).then(function (data) {
             self.options.makes = data;
         })
-        self.getCars();
-        self.getCount();
+/*        self.getCars();
+        self.getCount(); */
+        self.getCars1();
     }
 
     self.getModels = function () {
@@ -108,8 +111,9 @@
         testCarSvc.getModels(self.selected).then(function (data) {
             self.options.models = data;
         })
-        self.getCars();
-        self.getCount();
+/*        self.getCars();
+        self.getCount(); */
+        self.getCars1();
     }
 
     self.getTrims = function () {
@@ -119,7 +123,8 @@
         testCarSvc.getTrims(self.selected).then(function (data) {
             self.options.trims = data;
         })
-        self.getCount();
+        /*        self.getCount(); */
+        self.getCars1();
     }
 
     self.getCars = function () {
@@ -132,6 +137,23 @@
         })
     }
 
+    self.getCars1 = function () {
+        if (!self.loading) {
+            self.loading = true;
+            var s = angular.copy(self.selected);
+            s.page += 1;
+            self.cars = [];
+
+            $q.all([testCarSvc.getCars(s), testCarSvc.getCount(s)])
+                .then(function (data) {
+                console.log(data);
+                self.cars = data[0];
+                self.Carcount = data[1];
+                self.loading = false;
+            });
+        }
+    }
+
     self.getCount = function () {
         testCarSvc.getCount(self.selected).then(function (data) {
             self.Carcount = data;
@@ -139,10 +161,11 @@
     }
 
     self.getAllinfo = function () {
-        if ((self.yearchecked && self.selected.year != "") || (self.makechecked && self.selected.model != ""))
+        if ((self.yearchecked && self.selected.year != "") || (self.makechecked && self.selected.make != ""))
         {
-            self.getCars();
-            self.getCount();
+/*            self.getCars();
+            self.getCount(); */
+            self.getCars1();
         }
     }
 }]);
