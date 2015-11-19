@@ -34,7 +34,6 @@
     self.Carcount = "";
 
     self.cars = [];
-    self.printstring = "";
 
     self.DataIni = function (year, make) {
         self.selected.year = "";
@@ -48,13 +47,11 @@
         self.cars = [];
         if(year)
         {
-            self.printstring = "Please select a year"
             self.makechecked = "";
             self.getYears();
         }
         if(make)
         {
-            self.printstring = "Please select a make"
             self.yearchecked = "";
             self.getMakes1();
         }
@@ -64,16 +61,12 @@
         testCarSvc.getYears().then(function (data) {
             self.options.years = data;
         });
-        self.getCars();
-        self.getCount();
     }
 
     self.getMakes1 = function () {
         testCarSvc.getMakes1().then(function (data) {
             self.options.makes = data;
         });
-        self.getCars();
-        self.getCount();
     }
 
     self.getYears1 = function () {
@@ -84,7 +77,6 @@
         self.selected.trim = "";
         self.options.trims = "";
         self.cars = [];
-        self.printstring = "Please select a year"
         testCarSvc.getYears1(self.selected).then(function (data) {
             self.options.years = data;
         });
@@ -100,7 +92,6 @@
         self.selected.trim = "";
         self.options.trims = "";
         self.cars = [];
-        self.printstring = "Please select a make"
         testCarSvc.getMakes(self.selected).then(function (data) {
             self.options.makes = data;
         })
@@ -114,7 +105,6 @@
         self.selected.trim = "";
         self.options.trims = "";
         self.cars = [];
-        self.printstring = "Please select a model"
         testCarSvc.getModels(self.selected).then(function (data) {
             self.options.models = data;
         })
@@ -126,7 +116,6 @@
         self.selected.trim = "";
         self.options.trims = "";
         self.cars = [];
-        self.printstring = "Please select a trim"
         testCarSvc.getTrims(self.selected).then(function (data) {
             self.options.trims = data;
         })
@@ -150,7 +139,10 @@
     }
 
     self.getAllinfo = function () {
-        self.getCars();
-        self.getCount();
+        if ((self.yearchecked && self.selected.year != "") || (self.makechecked && self.selected.model != ""))
+        {
+            self.getCars();
+            self.getCount();
+        }
     }
 }]);
