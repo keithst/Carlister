@@ -24,7 +24,9 @@ namespace Carlister.Controllers
             public string make { get; set; }
             public string model { get; set; }
             public string trim { get; set; }
-            public bool? trimbit { get; set; }
+            public bool paging { get; set; }
+            public int page { get; set; }
+            public int perPage { get; set; }
         }
 
         public string Get()
@@ -120,7 +122,7 @@ namespace Carlister.Controllers
             List<Car> data = new List<Car>();
             if (!string.IsNullOrWhiteSpace(input.year))
             {
-                data = await db.GetVariableCars(input.year, input.make, input.model, input.trim, input.trimbit);
+                data = await db.GetVariableCars(input.year, input.make, input.model, input.trim, input.paging, input.page, input.perPage);
             }
             else
             {
@@ -130,6 +132,13 @@ namespace Carlister.Controllers
                 }
             }
             return data;
+        }
+
+        [HttpPost]
+        [Route("GetCount")]
+        public async Task<int> GetCount(apiparm input)
+        {
+            return await db.GetCount(input.year, input.make, input.model, input.trim);
         }
 
         [Route("GetCar")]

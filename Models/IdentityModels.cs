@@ -128,19 +128,55 @@ namespace Carlister.Models
             return await this.Database.SqlQuery<Car>("GetCarsByYearMakeModelTrim @year, @make, @model, @trim", yearParm, makeParm, modelParm, trimParm).ToListAsync();
         }
 
-        public async Task<List<Car>> GetVariableCars(string year, string make, string model, string trim, bool? trimbit)
+        public async Task<List<Car>> GetVariableCars(string year, string make, string model, string trim, bool paging, int page, int perPage)
+        {
+            var yearParm = new SqlParameter("@year", year);
+            var makeParm = new SqlParameter("@make", make);
+            var modelParm = new SqlParameter("@model", model);
+            var trimParm = new SqlParameter("@trim", trim);
+            var pagingParm = new SqlParameter("@paging", paging);
+            var pageParm = new SqlParameter("@page", page);
+            var perPageParm = new SqlParameter("@perPage", perPage);
+
+            var stored = "GetVariableCars ";
+            List<SqlParameter> storedparm = new List<SqlParameter>();
+                stored += "@year";
+                storedparm.Add(yearParm);
+                stored += ", ";
+                stored += "@make";
+                storedparm.Add(makeParm);
+                stored += ", ";
+                stored += "@model";
+                storedparm.Add(modelParm);
+                stored += ", ";
+                stored += "@trim";
+                storedparm.Add(trimParm);
+                stored += ", ";
+                stored += "@paging";
+                storedparm.Add(pagingParm);
+                stored += ", ";
+                stored += "@page";
+                storedparm.Add(pageParm);
+                stored += ", ";
+                stored += "@perPage";
+                storedparm.Add(perPageParm);
+
+            return await this.Database.SqlQuery<Car>(stored, storedparm.ToArray()).ToListAsync();
+        }
+
+        public async Task<int> GetCount(string year, string make, string model, string trim)
         {
             var yearParm = new SqlParameter("@year", year);
             var makeParm = new SqlParameter("@make", make);
             var modelParm = new SqlParameter("@model", model);
             var trimParm = new SqlParameter("@trim", trim);
 
-            var stored = "GetVariableCars "; 
+            var stored = "GetCount ";
             bool notfirst = false;
             List<SqlParameter> storedparm = new List<SqlParameter>();
-            if(!string.IsNullOrWhiteSpace(year))
+            if (!string.IsNullOrWhiteSpace(year))
             {
-                if(notfirst)
+                if (notfirst)
                 {
                     stored += ", ";
                 }
@@ -179,8 +215,7 @@ namespace Carlister.Models
                 notfirst = true;
             }
 
-            return await this.Database.SqlQuery<Car>(stored, storedparm.ToArray()).ToListAsync();
+            return await this.Database.SqlQuery<int>(stored, storedparm.ToArray()).FirstOrDefaultAsync();
         }
-
     }
 }

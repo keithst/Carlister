@@ -45,6 +45,12 @@
             });
         }
 
+        f.getCount = function (selected) {
+            return $http.post('/api/Car/GetCount', selected).then(function (response) {
+                return response.data;
+            });
+        }
+
         return f;
 
     }

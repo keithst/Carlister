@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <link href="Content/trNgGrid.min.css" rel="stylesheet" />
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/trNgGrid.min.css" rel="stylesheet" />
     <title></title>
 </head>
 <body>
@@ -20,8 +20,12 @@
         <select ng-show="ctrl.makechecked && ctrl.selected.make" ng-options="year for year in ctrl.options.years | orderBy: 'year'" ng-model="ctrl.selected.year" ng-change="ctrl.getModels()"></select>
         <select ng-show="ctrl.makechecked && ctrl.selected.year" ng-options="model for model in ctrl.options.models | orderBy: 'model'" ng-model="ctrl.selected.model" ng-change="ctrl.getTrims()"></select>
         <select ng-show="ctrl.makechecked && ctrl.selected.model" ng-options="trim for trim in ctrl.options.trims | orderBy: 'trim'" ng-model="ctrl.selected.trim" ng-change="ctrl.getCars()"></select><br />
-
-        <table tr-ng-grid="" selection-mode="SingleRow" items="ctrl.cars" fields="['model_year', 'make_display', 'model_name', 'model_trim']">
+        {{ctrl.selected.page}}
+        <table tr-ng-grid="" items="ctrl.cars" fields="['model_year', 'make_display', 'model_name', 'model_trim']"
+                total-items="ctrl.Carcount"
+               on-data-required="ctrl.getAllinfo()"
+               page-items="ctrl.selected.perPage"
+               current-page="ctrl.selected.page">
             <thead>
                 <tr>
                     <th field-name="model_year" display-name="Year"></th>

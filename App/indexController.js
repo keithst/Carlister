@@ -8,7 +8,10 @@
         year: "",
         make: "",
         model: "",
-        trim: ""
+        trim: "",
+        paging: true,
+        page: 0,
+        perPage: 50
     }
 
     self.options = {
@@ -17,6 +20,8 @@
         models: "",
         trims: ""
     }
+
+    self.Carcount = "";
 
     self.cars = [];
     self.printstring = "";
@@ -49,12 +54,16 @@
         testCarSvc.getYears().then(function (data) {
             self.options.years = data;
         });
+        self.getCars();
+        self.getCount();
     }
 
     self.getMakes1 = function () {
         testCarSvc.getMakes1().then(function (data) {
             self.options.makes = data;
         });
+        self.getCars();
+        self.getCount();
     }
 
     self.getYears1 = function () {
@@ -70,6 +79,7 @@
             self.options.years = data;
         });
         self.getCars();
+        self.getCount();
     }
 
     self.getMakes = function () {
@@ -85,6 +95,7 @@
             self.options.makes = data;
         })
         self.getCars();
+        self.getCount();
     }
 
     self.getModels = function () {
@@ -98,6 +109,7 @@
             self.options.models = data;
         })
         self.getCars();
+        self.getCount();
     }
 
     self.getTrims = function () {
@@ -108,15 +120,27 @@
         testCarSvc.getTrims(self.selected).then(function (data) {
             self.options.trims = data;
         })
-        self.getCars();
+        self.getCount();
     }
 
     self.getCars = function () {
         self.cars = [];
-
-        testCarSvc.getCars(self.selected).then(function (data)
+        var s = angular.copy(self.selected);
+        s.page += 1;
+        testCarSvc.getCars(s).then(function (data)
         {
             self.cars = data;
         })
+    }
+
+    self.getCount = function () {
+        testCarSvc.getCount(self.selected).then(function (data) {
+            self.Carcount = data;
+        })
+    }
+
+    self.getAllinfo = function () {
+        self.getCars();
+        self.getCount();
     }
 }]);
