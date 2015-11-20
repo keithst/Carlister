@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 namespace Carlister.Controllers
@@ -180,6 +181,25 @@ namespace Carlister.Controllers
             var mediaUrl = firstImage != null ? firstImage.MediaUrl : null;
 
             dynamic recalls;
+            var temp = car.model_name;
+            if(temp.Contains('&'))
+            {
+                var buildit = temp.Split('&');
+                var count = buildit.Count();
+                temp = "";
+                foreach(var item in buildit)
+                {
+                    if(count > 1)
+                    {
+                        temp += item + "And";
+                    }
+                    else
+                    {
+                        temp += item;
+                    }
+                    count--;
+                }
+            }
 
             using (var httpClient = new HttpClient())
             {
@@ -187,7 +207,7 @@ namespace Carlister.Controllers
 
                 try
                 {
-                    response = await httpClient.GetAsync("webapi/api/Recalls/vehicle/modelyear/"+car.model_year+"/make/"+car.make+"/model/"+car.model_name+"?format=json");
+                    response = await httpClient.GetAsync("webapi/api/Recalls/vehicle/modelyear/"+car.model_year+"/make/"+car.make+"/model/"+temp+"?format=json");
                     recalls = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
                 }
                 catch (Exception e)
