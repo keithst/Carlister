@@ -31,14 +31,18 @@
                 <span ng-show="ctrl.makechecked && ctrl.selected.model">Trim</span>
                 <select ng-show="ctrl.makechecked && ctrl.selected.model" ng-options="trim for trim in ctrl.options.trims | orderBy: 'trim'" ng-model="ctrl.selected.trim" ng-change="ctrl.getCars()"></select><br />
             </div>
+            <div class="col-xs-5">
+            </div>
         </div>
 
         <span>Cars Per Page</span><input type="number" ng-model="ctrl.perPages" ng-change="ctrl.changeperPage()" ng-init="ctrl.changeperPage()" />
         <table tr-ng-grid="" items="ctrl.cars" fields="['model_year', 'make_display', 'model_name', 'model_trim']"
-                total-items="ctrl.Carcount"
+               total-items="ctrl.Carcount"
                on-data-required="ctrl.getAllinfo()"
                page-items="ctrl.selected.perPage"
-               current-page="ctrl.selected.page">
+               current-page="ctrl.selected.page"
+               enable-sorting="false"
+               enable-filtering="false">
             <thead>
                 <tr>
                     <th field-name="model_year" display-name="Year"></th>

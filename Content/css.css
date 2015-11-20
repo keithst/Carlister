@@ -2,3 +2,8 @@
     max-height: 100%;
     max-width: 100%;
 }
+
+.image-size-banner {
+    max-height : 200px;
+    max-width: 100%;
+}

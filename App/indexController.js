@@ -180,17 +180,17 @@
     }
 }]);
 
-angular.module("car-finder").controller('carModalCtrl', function ($modalInstance, car) {
+angular.module("car-finder").controller('carModalCtrl', function ($uibModalInstance, car) {
 
     var scope = this;
 
     scope.car = car;
 
     scope.ok = function () {
-        $modalInstance.close();
+        $uibModalInstance.close();
     };
 
     scope.cancel = function () {
-        $modalInstance.dismiss();
+        $uibModalInstance.dismiss();
     };
 });
