@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <link href="Content/css.css" rel="stylesheet" />
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <link href="Content/trNgGrid.min.css" rel="stylesheet" />
     <title></title>
@@ -52,13 +53,37 @@
         <script type="text/ng-template" id="carModal.html">
             <div class="modal-header">
                 <h3 class="modal-title">
-                    {{cm.car.car.model_year}} {{cm.car.car.make}} - {{cm.car.car.model_name}} {{cm.car.car.model_trim}}
+                    {{cm.car.car.model_year}} {{cm.car.car.make_display}} - {{cm.car.car.model_name}} {{cm.car.car.model_trim}}
                     <button class="pull-right btn btn-default" ng-click="cm.cancel()">X</button>
                 </h3>
             </div>
             <div class="modal-body">
 
+                <uib-tabset>
+                    <uib-tab heading="Car Details">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <img src="{{cm.car.mediaUrl}}" class="image-size" />
+                            </div>
+                            <div class="col-xs-6">
+                                Year: {{cm.car.car.model_year}} <br />
+                                Make: {{cm.car.car.make_display}} <br />
+                                Model: {{cm.car.car.model_name}} <br />
+                                Trim: {{cm.car.car.model_trim}} <br />
+                                Body Style: {{cm.car.car.body_style}} <br />
+                                Engine CC: {{cm.car.car.engine_cc}} <br />
+                                Engine Power: {{cm.car.car.engine_power_ps}} <br />
+                                Cylinders: {{cm.car.car.engine_num_cyl}} <br />
+                            </div>
+                        </div>
 
+                    </uib-tab>
+                    <uib-tab heading="Recalls">
+                        <div ng-repeat="results in cm.car.recalls.Results">
+                            <p>Recall: {{results.Summary}}</p>
+                        </div>
+                    </uib-tab>
+                </uib-tabset>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" ng-click="cm.ok()">OK</button>

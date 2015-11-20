@@ -9,9 +9,9 @@
         {
             self.perPages = 200;
         }
-        if (self.perPages < 1)
+        if (self.perPages < 10)
         {
-            self.perPages = 1;
+            self.perPages = 10;
         }
         self.selected.perPage = self.perPages;
     }
