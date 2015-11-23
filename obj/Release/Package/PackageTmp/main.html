@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="Content/css.css" rel="stylesheet" />
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/trNgGrid.min.css" rel="stylesheet" />
+    <title></title>
+</head>
+<body>
+    <div ng-app="car-finder" ng-controller="indexController as ctrl" ng-cloak>
+        <div class="row">
+            <div class="col-xs-7">
+                Select a search method <br />
+                <input type="radio" name="start" ng-model="ctrl.yearchecked" value="true" ng-change="ctrl.DataIni(ctrl.yearchecked, false)" /><span>Year</span>
+                <input type="radio" name="start" ng-model="ctrl.makechecked" value="true" ng-change="ctrl.DataIni(false, ctrl.makechecked)" /><span>Make</span><br />
+                <span ng-show="ctrl.yearchecked">Year</span>
+                <select ng-show="ctrl.yearchecked" ng-options="year for year in ctrl.options.years | orderBy: 'year'" ng-model="ctrl.selected.year" ng-change="ctrl.getMakes()"></select>
+                <span ng-show="ctrl.yearchecked && ctrl.selected.year">Make</span>
+                <select ng-show="ctrl.yearchecked && ctrl.selected.year" ng-options="make for make in ctrl.options.makes | orderBy: 'make'" ng-model="ctrl.selected.make" ng-change="ctrl.getModels()"></select>
+                <span ng-show="ctrl.yearchecked && ctrl.selected.make">Model</span>
+                <select ng-show="ctrl.yearchecked && ctrl.selected.make" ng-options="model for model in ctrl.options.models | orderBy: 'model'" ng-model="ctrl.selected.model" ng-change="ctrl.getTrims()"></select>
+                <span ng-show="ctrl.yearchecked && ctrl.selected.model">Trim</span>
+                <select ng-show="ctrl.yearchecked && ctrl.selected.model" ng-options="trim for trim in ctrl.options.trims | orderBy: 'trim'" ng-model="ctrl.selected.trim" ng-change="ctrl.getCars()"></select>
+
+                <span ng-show="ctrl.makechecked">Make</span>
+                <select ng-show="ctrl.makechecked" ng-options="make for make in ctrl.options.makes | orderBy: 'make'" ng-model="ctrl.selected.make" ng-change="ctrl.getYears1()"></select>
+                <span ng-show="ctrl.makechecked && ctrl.selected.make">Year</span>
+                <select ng-show="ctrl.makechecked && ctrl.selected.make" ng-options="year for year in ctrl.options.years | orderBy: 'year'" ng-model="ctrl.selected.year" ng-change="ctrl.getModels()"></select>
+                <span ng-show="ctrl.makechecked && ctrl.selected.year">Model</span>
+                <select ng-show="ctrl.makechecked && ctrl.selected.year" ng-options="model for model in ctrl.options.models | orderBy: 'model'" ng-model="ctrl.selected.model" ng-change="ctrl.getTrims()"></select>
+                <span ng-show="ctrl.makechecked && ctrl.selected.model">Trim</span>
+                <select ng-show="ctrl.makechecked && ctrl.selected.model" ng-options="trim for trim in ctrl.options.trims | orderBy: 'trim'" ng-model="ctrl.selected.trim" ng-change="ctrl.getCars()"></select><br />
+            </div>
+            <div class="col-xs-5">
+            </div>
+        </div>
+
+        <span>Cars Per Page</span><input type="number" ng-model="ctrl.perPages" ng-change="ctrl.changeperPage()" ng-init="ctrl.changeperPage()" />
+        <table tr-ng-grid="" items="ctrl.cars" fields="['model_year', 'make_display', 'model_name', 'model_trim']"
+               total-items="ctrl.Carcount"
+               on-data-required="ctrl.getAllinfo()"
+               page-items="ctrl.selected.perPage"
+               current-page="ctrl.selected.page"
+               enable-sorting="false"
+               enable-filtering="false">
+            <thead>
+                <tr>
+                    <th field-name="model_year" display-name="Year"></th>
+                    <th field-name="make_display" display-name="Make"></th>
+                    <th field-name="model_name" display-name="Model"></th>
+                    <th field-name="model_trim" display-name="Trim"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <button class="btn btn-default" ng-click="ctrl.open(gridItem.id)">Info</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <script type="text/ng-template" id="carModal.html">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    {{cm.car.car.model_year}} {{cm.car.car.make_display}} - {{cm.car.car.model_name}} {{cm.car.car.model_trim}}
+                    <button class="pull-right btn btn-default" ng-click="cm.cancel()">X</button>
+                </h3>
+            </div>
+            <div class="modal-body">
+
+                <uib-tabset>
+                    <uib-tab heading="Car Details">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <img class="image-size" ng-src="{{cm.car.mediaUrl}}" />
+                            </div>
+                            <div class="col-xs-6">
+                                Year: {{cm.car.car.model_year}} <br />
+                                Make: {{cm.car.car.make_display}} <br />
+                                Model: {{cm.car.car.model_name}} <br />
+                                Trim: {{cm.car.car.model_trim}} <br />
+                                Body Style: {{cm.car.car.body_style}} <br />
+                                Engine CC: {{cm.car.car.engine_cc}} <br />
+                                Engine Power: {{cm.car.car.engine_power_ps}} <br />
+                                Cylinders: {{cm.car.car.engine_num_cyl}} <br />
+                            </div>
+                        </div>
+
+                    </uib-tab>
+                    <uib-tab heading="Recalls">
+                        <table tr-ng-grid="" items="cm.car.recalls.Results" fields="['Component', 'Summary']"
+                               total-items="cm.car.recalls.Count"
+                               page-items="1"
+                               current-page="0"
+                               enable-sorting="false"
+                               enable-filtering="false">
+                            <thead>
+                                <tr>
+                                    <th field-name="Component" display-name="Component"></th>
+                                    <th field-name="Summary" display-name="Summary"></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </uib-tab>
+                </uib-tabset>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="cm.ok()">OK</button>
+                <button class="btn btn-warning" ng-click="cm.cancel()">Cancel</button>
+            </div>
+        </script>
+    </div>
+
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+    <script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/angular-ui/ui-bootstrap.min.js"></script>
+    <script src="Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+    <script src="Scripts/trNgGrid.min.js"></script>
+    <script src="App/App.js"></script>
+    <script src="App/httprequest.js"></script>
+    <script src="App/indexController.js"></script>
+</body>
+</html>
