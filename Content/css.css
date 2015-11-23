@@ -7,3 +7,35 @@
     max-height : 200px;
     max-width: 100%;
 }
+
+.intro-header {
+    margin-top: -45px;
+    text-align: center;
+    color: #f8f8f8;
+    background: url('car-orange-retro.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+.intro-message {
+    position: relative;
+    padding-top: 50%;
+    padding-bottom: 10%;
+}
+
+.intro-message > h1 {
+    margin: 0;
+    margin-top: -350px;
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    font-size: 7em;
+}
+
+.intro-divider {
+    width: 400px;
+    border-top: 1px solid #f8f8f8;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.intro-message > h3 {
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    font-size: 4em;
+}
