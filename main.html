@@ -9,33 +9,35 @@
 <body>
     <div ng-app="car-finder" ng-controller="indexController as ctrl" ng-cloak>
         <div class="row">
-            <div class="col-xs-7">
+            <div class="col-xs-10">
                 Select a search method <br />
-                <input type="radio" name="start" ng-model="ctrl.yearchecked" value="true" ng-change="ctrl.DataIni(ctrl.yearchecked, false)" /><span>Year</span>
-                <input type="radio" name="start" ng-model="ctrl.makechecked" value="true" ng-change="ctrl.DataIni(false, ctrl.makechecked)" /><span>Make</span><br />
-                <span ng-show="ctrl.yearchecked">Year</span>
-                <select ng-show="ctrl.yearchecked" ng-options="year for year in ctrl.options.years | orderBy: 'year'" ng-model="ctrl.selected.year" ng-change="ctrl.getMakes()"></select>
-                <span ng-show="ctrl.yearchecked && ctrl.selected.year">Make</span>
-                <select ng-show="ctrl.yearchecked && ctrl.selected.year" ng-options="make for make in ctrl.options.makes | orderBy: 'make'" ng-model="ctrl.selected.make" ng-change="ctrl.getModels()"></select>
-                <span ng-show="ctrl.yearchecked && ctrl.selected.make">Model</span>
-                <select ng-show="ctrl.yearchecked && ctrl.selected.make" ng-options="model for model in ctrl.options.models | orderBy: 'model'" ng-model="ctrl.selected.model" ng-change="ctrl.getTrims()"></select>
-                <span ng-show="ctrl.yearchecked && ctrl.selected.model">Trim</span>
-                <select ng-show="ctrl.yearchecked && ctrl.selected.model" ng-options="trim for trim in ctrl.options.trims | orderBy: 'trim'" ng-model="ctrl.selected.trim" ng-change="ctrl.getCars()"></select>
+                <input class="pad-bottom" type="radio" name="start" ng-model="ctrl.yearchecked" value="true" ng-change="ctrl.DataIni(ctrl.yearchecked, false)" /><span>Year</span>
+                <input class="pad-bottom" type="radio" name="start" ng-model="ctrl.makechecked" value="true" ng-change="ctrl.DataIni(false, ctrl.makechecked)" /><span>Make</span><br />
+                <span class="pad-bottom" ng-show="ctrl.yearchecked">Year</span>
+                <select class="pad-bottom" ng-show="ctrl.yearchecked" ng-options="year for year in ctrl.options.years | orderBy: 'year'" ng-model="ctrl.selected.year" ng-change="ctrl.getMakes()"></select>
+                <span class="pad-bottom" ng-show="ctrl.yearchecked && ctrl.selected.year">Make</span>
+                <select class="pad-bottom" ng-show="ctrl.yearchecked && ctrl.selected.year" ng-options="make for make in ctrl.options.makes | orderBy: 'make'" ng-model="ctrl.selected.make" ng-change="ctrl.getModels()"></select>
+                <span class="pad-bottom" ng-show="ctrl.yearchecked && ctrl.selected.make">Model</span>
+                <select class="pad-bottom" ng-show="ctrl.yearchecked && ctrl.selected.make" ng-options="model for model in ctrl.options.models | orderBy: 'model'" ng-model="ctrl.selected.model" ng-change="ctrl.getTrims()"></select>
+                <span class="pad-bottom" ng-show="ctrl.yearchecked && ctrl.selected.model">Trim</span>
+                <select class="pad-bottom" ng-show="ctrl.yearchecked && ctrl.selected.model" ng-options="trim for trim in ctrl.options.trims | orderBy: 'trim'" ng-model="ctrl.selected.trim" ng-change="ctrl.getCars()"></select>
 
-                <span ng-show="ctrl.makechecked">Make</span>
-                <select ng-show="ctrl.makechecked" ng-options="make for make in ctrl.options.makes | orderBy: 'make'" ng-model="ctrl.selected.make" ng-change="ctrl.getYears1()"></select>
-                <span ng-show="ctrl.makechecked && ctrl.selected.make">Year</span>
-                <select ng-show="ctrl.makechecked && ctrl.selected.make" ng-options="year for year in ctrl.options.years | orderBy: 'year'" ng-model="ctrl.selected.year" ng-change="ctrl.getModels()"></select>
-                <span ng-show="ctrl.makechecked && ctrl.selected.year">Model</span>
-                <select ng-show="ctrl.makechecked && ctrl.selected.year" ng-options="model for model in ctrl.options.models | orderBy: 'model'" ng-model="ctrl.selected.model" ng-change="ctrl.getTrims()"></select>
-                <span ng-show="ctrl.makechecked && ctrl.selected.model">Trim</span>
-                <select ng-show="ctrl.makechecked && ctrl.selected.model" ng-options="trim for trim in ctrl.options.trims | orderBy: 'trim'" ng-model="ctrl.selected.trim" ng-change="ctrl.getCars()"></select><br />
+                <span class="pad-bottom" ng-show="ctrl.makechecked">Make</span>
+                <select class="pad-bottom" ng-show="ctrl.makechecked" ng-options="make for make in ctrl.options.makes | orderBy: 'make'" ng-model="ctrl.selected.make" ng-change="ctrl.getYears1()"></select>
+                <span class="pad-bottom" ng-show="ctrl.makechecked && ctrl.selected.make">Year</span>
+                <select class="pad-bottom" ng-show="ctrl.makechecked && ctrl.selected.make" ng-options="year for year in ctrl.options.years | orderBy: 'year'" ng-model="ctrl.selected.year" ng-change="ctrl.getModels()"></select>
+                <span class="pad-bottom" ng-show="ctrl.makechecked && ctrl.selected.year">Model</span>
+                <select class="pad-bottom" ng-show="ctrl.makechecked && ctrl.selected.year" ng-options="model for model in ctrl.options.models | orderBy: 'model'" ng-model="ctrl.selected.model" ng-change="ctrl.getTrims()"></select>
+                <span class="pad-bottom" ng-show="ctrl.makechecked && ctrl.selected.model">Trim</span>
+                <select class="pad-bottom" ng-show="ctrl.makechecked && ctrl.selected.model" ng-options="trim for trim in ctrl.options.trims | orderBy: 'trim'" ng-model="ctrl.selected.trim" ng-change="ctrl.getCars()"></select><br />
             </div>
-            <div class="col-xs-5">
+            <div class="col-xs-2">
+                <a href="https://github.com/keithst/Carlister" class="btn btn-default align-right">Github</a>
             </div>
         </div>
 
-        <span>Cars Per Page</span><input type="number" ng-model="ctrl.perPages" ng-change="ctrl.changeperPage()" ng-init="ctrl.changeperPage()" />
+        <span class="pad-bottom">Cars Per Page</span><input class="pad-bottom" type="number" ng-model="ctrl.perPages" ng-change="ctrl.changeperPage()" ng-init="ctrl.changeperPage()" />
+    <div class="pad-left pad-right">
         <table tr-ng-grid="" items="ctrl.cars" fields="['model_year', 'make_display', 'model_name', 'model_trim']"
                total-items="ctrl.Carcount"
                on-data-required="ctrl.getAllinfo()"
@@ -59,6 +61,7 @@
                 </tr>
             </tbody>
         </table>
+    </div>
         <script type="text/ng-template" id="carModal.html">
             <div class="modal-header">
                 <h3 class="modal-title">
