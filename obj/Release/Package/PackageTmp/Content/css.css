@@ -8,6 +8,24 @@
     max-width: 100%;
 }
 
+.pad-bottom {
+    margin-top: 3px;
+    margin-bottom: 5px;
+}
+
+.pad-left {
+    margin-left: 5px;
+}
+
+.align-right {
+    float: right;
+    padding: 0;
+}
+
+.pad-right {
+    margin-right: 5px;
+}
+
 .intro-header {
     margin-top: -45px;
     text-align: center;
